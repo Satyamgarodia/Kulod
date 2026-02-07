@@ -1,608 +1,689 @@
 import React, { useState, useEffect, useRef } from "react";
 import {
-  Github,
-  Linkedin,
-  Mail,
-  Phone,
-  MapPin,
-  Code,
-  Terminal,
   Zap,
-  Server,
-  Database,
-  Cloud,
+  Menu,
+  X,
   ChevronDown,
-  ExternalLink,
+  Gauge,
+  Battery,
+  Clock,
+  MapPin,
+  Phone,
+  Mail,
+  Building2,
+  ArrowRight,
+  Calculator,
+  Star,
+  Bike,
+  ChevronRight,
+  Play,
+  Check,
+  Globe,
+  Shield,
   Award,
-  Briefcase,
+  TrendingUp,
+  Users,
+  Target,
+  Sparkles,
 } from "lucide-react";
+import Footer from "./components/Footer";
+import Contact from "./components/Contact";
 
-const Portfolio = () => {
-  const [activeSection, setActiveSection] = useState("hero");
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [glitchActive, setGlitchActive] = useState(false);
-  const canvasRef = useRef(null);
+// Products Data - Easily Scalable
+const productsData = [
+  {
+    id: 1,
+    name: "Zelio Urban",
+    tagline: "Perfect for city commute",
+    price: 65000,
+    image: "🛵",
+    specs: {
+      range: "80",
+      topSpeed: "45",
+      battery: "2.3",
+      charging: "4-5",
+    },
+    colors: ["#FFFFFF", "#000000", "#4A90E2"],
+    variants: ["Standard", "Pro"],
+    features: ["Smart Display", "Anti-theft", "USB Charging"],
+  },
+  {
+    id: 2,
+    name: "Zelio Sport",
+    tagline: "Power meets style",
+    price: 85000,
+    image: "🏍️",
+    specs: {
+      range: "100",
+      topSpeed: "60",
+      battery: "3.2",
+      charging: "5-6",
+    },
+    colors: ["#E63946", "#C0C0C0", "#000000"],
+    variants: ["Standard", "Pro", "Elite"],
+    features: ["Sport Mode", "LED Lights", "Digital Console", "Cruise Control"],
+  },
+  {
+    id: 3,
+    name: "Zelio Cargo",
+    tagline: "Built for business",
+    price: 95000,
+    image: "🚚",
+    specs: {
+      range: "90",
+      topSpeed: "40",
+      battery: "3.5",
+      charging: "6-7",
+    },
+    colors: ["#808080", "#FDB813", "#FFFFFF"],
+    variants: ["Standard", "Heavy Duty"],
+    features: ["Large Cargo Space", "Reinforced Frame", "Commercial GPS"],
+  },
+  {
+    id: 4,
+    name: "Zelio Classic",
+    tagline: "Timeless elegance",
+    price: 55000,
+    image: "🛴",
+    specs: {
+      range: "70",
+      topSpeed: "40",
+      battery: "2.0",
+      charging: "3-4",
+    },
+    colors: ["#F5E6D3", "#8B4513", "#2D5016"],
+    variants: ["Standard"],
+    features: ["Retro Design", "Comfort Seat", "Easy Maintenance"],
+  },
+  {
+    id: 5,
+    name: "Zelio Pro Max",
+    tagline: "Ultimate performance",
+    price: 125000,
+    image: "⚡",
+    specs: {
+      range: "150",
+      topSpeed: "75",
+      battery: "4.8",
+      charging: "7-8",
+    },
+    colors: ["#000000", "#E63946", "#4A90E2", "#C0C0C0"],
+    variants: ["Pro", "Elite"],
+    features: [
+      "Fast Charging",
+      "Premium Suspension",
+      "Smart Connectivity",
+      "Advanced Safety",
+    ],
+  },
+];
+
+export default function ZelioWebsite() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [scrollY, setScrollY] = useState(0);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [calculatorData, setCalculatorData] = useState({
+    model: "",
+    downPayment: "",
+    tenure: "",
+    interestRate: "10.5",
+  });
+  const [emiResult, setEmiResult] = useState(null);
+  const [activeSection, setActiveSection] = useState("home");
 
   useEffect(() => {
-    setIsLoaded(true);
-
-    // Mouse tracking for gradient follow effect
-    const handleMouseMove = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
+    const handleScroll = () => {
+      setScrollY(window.scrollY);
     };
-    window.addEventListener("mousemove", handleMouseMove);
-
-    // Random glitch effect
-    const glitchInterval = setInterval(() => {
-      setGlitchActive(true);
-      setTimeout(() => setGlitchActive(false), 200);
-    }, 5000);
-
-    // Particle canvas animation
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-
-    const ctx = canvas.getContext("2d");
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-
-    const particles = [];
-    for (let i = 0; i < 100; i++) {
-      particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        vx: (Math.random() - 0.5) * 0.5,
-        vy: (Math.random() - 0.5) * 0.5,
-        size: Math.random() * 2,
-      });
-    }
-
-    const animate = () => {
-      ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      particles.forEach((p) => {
-        p.x += p.vx;
-        p.y += p.vy;
-
-        if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
-        if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
-
-        ctx.fillStyle = "rgba(0, 255, 159, 0.5)";
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fill();
-      });
-
-      requestAnimationFrame(animate);
-    };
-    animate();
-
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      clearInterval(glitchInterval);
-    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const skills = [
-    { name: "React.js", level: 95, icon: Code },
-    { name: "Node.js", level: 90, icon: Server },
-    { name: "SQL", level: 88, icon: Database },
-    { name: "React Native", level: 85, icon: Terminal },
-    { name: "PHP", level: 82, icon: Code },
-    { name: "Google Cloud", level: 80, icon: Cloud },
-  ];
+  const calculateEMI = (e) => {
+    e.preventDefault();
+    const vehiclePrice = parseFloat(calculatorData.model);
+    const downPayment = parseFloat(calculatorData.downPayment);
+    const tenure = parseInt(calculatorData.tenure);
+    const interestRate = parseFloat(calculatorData.interestRate);
 
-  const projects = [
-    {
-      title: "GPMS - Field Sales & Operation Management",
-      period: "Dec 2025 - Current",
-      status: "Live & Deploying",
-      description:
-        "Industry-ready SaaS solution streamlining field sales operations with multi-inventory, accounting, vehicles, and payments management.",
-      tech: [
-        "PostgreSQL",
-        "Express.js",
-        "React.js",
-        "React Native",
-        "Google Cloud",
-      ],
-      gradient: "from-cyan-500 to-blue-600",
-      url: "https://portal.garodia.in.net",
-    },
-    {
-      title: "Octa Wipe – Enterprise Bulk System Wiping",
-      period: "Oct 2025 - Current",
-      status: "In Development",
-      description:
-        "Single-click bulk wiping solution for Windows & Linux devices. NIST 800-88 & DOD 5220.22-M compliant network boot purge system.",
-      tech: ["Python", "Node.js", "Serva", "Ubuntu LTS", "Rust"],
-      gradient: "from-purple-500 to-pink-600",
-    },
-    {
-      title: "UPI Payment Management For SME",
-      period: "May 2023 - Mar 2025",
-      status: "Deprecated",
-      description:
-        "Integrated payment solution for multi-counter sales billing with Airtel Payments Bank at low cost for small enterprises.",
-      tech: ["PHP", "MySQL", "Linux", "Bootstrap"],
-      gradient: "from-green-500 to-emerald-600",
-    },
-  ];
+    if (downPayment >= vehiclePrice) {
+      alert("Down payment must be less than vehicle price");
+      return;
+    }
 
-  const certifications = [
-    { name: "Introduction to Networks", org: "Cisco", date: "Jan 2026" },
-    {
-      name: "Python For Data Science",
-      org: "NPTEL - IIT Madras",
-      date: "Feb 2024",
-    },
-    { name: "Ethical Hacking", org: "IIT Bombay", date: "Dec 2022" },
-  ];
+    const loanAmount = vehiclePrice - downPayment;
+    const monthlyRate = interestRate / 12 / 100;
+    const emi =
+      (loanAmount * monthlyRate * Math.pow(1 + monthlyRate, tenure)) /
+      (Math.pow(1 + monthlyRate, tenure) - 1);
+    const totalAmount = emi * tenure;
+    const totalInterest = totalAmount - loanAmount;
+
+    setEmiResult({
+      vehiclePrice,
+      downPayment,
+      loanAmount,
+      totalInterest,
+      monthlyEMI: emi,
+      tenure,
+    });
+  };
 
   return (
-    <div className="relative min-h-screen bg-black text-white overflow-hidden">
-      {/* Particle Canvas Background */}
-      <canvas
-        ref={canvasRef}
-        className="fixed inset-0 pointer-events-none opacity-30"
-      />
+    <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white min-h-screen overflow-x-hidden">
+      {/* Navigation */}
+      <nav
+        className={`fixed w-full z-50 transition-all duration-300 ${
+          scrollY > 50
+            ? "bg-slate-900/95 backdrop-blur-lg shadow-lg shadow-yellow-500/10"
+            : "bg-transparent"
+        }`}
+      >
+        <div className="max-w-7xl mx-auto px-6 py-4">
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <div className="flex items-center gap-3 orbitron">
+              <div className="relative">
+                <Zap
+                  className="w-10 h-10 text-yellow-500 energy-pulse"
+                  fill="#FDB813"
+                />
+              </div>
+              <span className="text-2xl md:text-3xl font-bold text-gradient tracking-wider">
+                ZELIO
+              </span>
+            </div>
 
-      {/* Gradient Orb Following Mouse */}
-      <div
-        className="fixed w-96 h-96 rounded-full blur-3xl opacity-20 pointer-events-none transition-all duration-300 ease-out"
-        style={{
-          background:
-            "radial-gradient(circle, rgba(0,255,159,0.4) 0%, transparent 70%)",
-          left: mousePosition.x - 192,
-          top: mousePosition.y - 192,
-        }}
-      />
+            {/* Desktop Menu */}
+            <ul className="hidden md:flex items-center gap-8">
+              {["Home", "Models", "Calculator", "Contact"].map((item) => (
+                <li key={item}>
+                  <a
+                    href={`#${item.toLowerCase()}`}
+                    className="relative text-gray-300 hover:text-yellow-500 transition-colors font-medium group"
+                  >
+                    {item}
+                    <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-yellow-500 to-purple-500 group-hover:w-full transition-all duration-300"></span>
+                  </a>
+                </li>
+              ))}
+            </ul>
 
-      {/* Scanline Effect */}
-      <div className="fixed inset-0 pointer-events-none opacity-10 bg-gradient-to-b from-transparent via-cyan-500/5 to-transparent animate-scan" />
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden text-yellow-500 hover:text-yellow-400 transition-colors"
+            >
+              {mobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
+          </div>
+
+          {/* Mobile Menu */}
+          {mobileMenuOpen && (
+            <div className="md:hidden mt-6 py-6 border-t border-yellow-500/20 fade-in-up">
+              <ul className="flex flex-col gap-4">
+                {["Home", "Models", "Calculator", "Contact"].map((item) => (
+                  <li key={item}>
+                    <a
+                      href={`#${item.toLowerCase()}`}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="block text-gray-300 hover:text-yellow-500 transition-colors font-medium text-lg"
+                    >
+                      {item}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      </nav>
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center px-6">
-        <div
-          className={`max-w-6xl w-full transition-all duration-1000 ${isLoaded ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
-        >
-          {/* Terminal Header */}
-          <div className="mb-8 font-mono text-sm text-green-400 opacity-70">
-            <span className="animate-pulse">▸</span> Initializing
-            portfolio.exe...
-            <br />
-            <span className="animate-pulse delay-100">▸</span> Loading
-            modules...
-            <br />
-            <span className="animate-pulse delay-200">▸</span> System ready.
-          </div>
-
-          {/* Main Name with Glitch */}
-          <h1
-            className={`text-8xl font-black mb-4 tracking-tighter ${glitchActive ? "glitch" : ""}`}
-            style={{ fontFamily: "Orbitron, monospace" }}
-          >
-            SATYAM
-            <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-green-400 to-cyan-400 animate-gradient">
-              GARODIA
-            </span>
-          </h1>
-
-          {/* Animated Role */}
-          <div className="flex items-center gap-3 mb-8">
-            <Terminal className="text-green-400 animate-pulse" size={28} />
-            <h2
-              className="text-3xl font-bold text-green-400"
-              style={{ fontFamily: "Space Mono, monospace" }}
-            >
-              SOFTWARE DEVELOPER
-            </h2>
-          </div>
-
-          {/* Bio with typing effect styling */}
-          <p className="text-xl text-gray-300 max-w-4xl leading-relaxed mb-12 font-light">
-            Full-stack developer specializing in{" "}
-            <span className="text-cyan-400 font-semibold">
-              SaaS architecture
-            </span>{" "}
-            and
-            <span className="text-cyan-400 font-semibold">
-              {" "}
-              enterprise-grade systems
-            </span>
-            . Building SAP-level workflows with expertise in Node.js, React, and
-            Linux system operations. Currently developing{" "}
-            <span className="text-green-400 font-semibold">
-              NIST SP 800-88 compliant
-            </span>{" "}
-            bulk data wiping solutions.
-          </p>
-
-          {/* Quick Stats */}
-          <div className="grid grid-cols-3 gap-6 mb-12">
-            <div className="border border-cyan-500/30 bg-cyan-500/5 p-6 rounded-lg backdrop-blur-sm hover:border-cyan-400/50 transition-all duration-300 hover:scale-105">
-              <div className="text-4xl font-bold text-cyan-400 mb-2">3+</div>
-              <div className="text-gray-400 text-sm">Live Projects</div>
-            </div>
-            <div className="border border-green-500/30 bg-green-500/5 p-6 rounded-lg backdrop-blur-sm hover:border-green-400/50 transition-all duration-300 hover:scale-105">
-              <div className="text-4xl font-bold text-green-400 mb-2">10+</div>
-              <div className="text-gray-400 text-sm">Technologies</div>
-            </div>
-            <div className="border border-purple-500/30 bg-purple-500/5 p-6 rounded-lg backdrop-blur-sm hover:border-purple-400/50 transition-all duration-300 hover:scale-105">
-              <div className="text-4xl font-bold text-purple-400 mb-2">3</div>
-              <div className="text-gray-400 text-sm">Certifications</div>
-            </div>
-          </div>
-
-          {/* Contact Links */}
-          <div className="flex gap-6 flex-wrap">
-            <a
-              href="https://github.com/Satyamgarodia"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-gray-800 to-gray-900 border border-gray-700 rounded-lg hover:border-cyan-400 hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300 group"
-            >
-              <Github
-                className="group-hover:text-cyan-400 transition-colors"
-                size={20}
-              />
-              <span className="group-hover:text-cyan-400 transition-colors">
-                GitHub
-              </span>
-            </a>
-            <a
-              href="https://linkedin.com/in/satyam-garodia"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-gray-800 to-gray-900 border border-gray-700 rounded-lg hover:border-blue-400 hover:shadow-lg hover:shadow-blue-500/20 transition-all duration-300 group"
-            >
-              <Linkedin
-                className="group-hover:text-blue-400 transition-colors"
-                size={20}
-              />
-              <span className="group-hover:text-blue-400 transition-colors">
-                LinkedIn
-              </span>
-            </a>
-            <a
-              href="mailto:Satyamgarodia1@gmail.com"
-              className="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-gray-800 to-gray-900 border border-gray-700 rounded-lg hover:border-green-400 hover:shadow-lg hover:shadow-green-500/20 transition-all duration-300 group"
-            >
-              <Mail
-                className="group-hover:text-green-400 transition-colors"
-                size={20}
-              />
-              <span className="group-hover:text-green-400 transition-colors">
-                Email
-              </span>
-            </a>
-            <a
-              href="tel:+918340370685"
-              className="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-gray-800 to-gray-900 border border-gray-700 rounded-lg hover:border-green-400 hover:shadow-lg hover:shadow-green-500/20 transition-all duration-300 group"
-            >
-              <Phone
-                className="group-hover:text-green-400 transition-colors"
-                size={20}
-              />
-              <span className="group-hover:text-green-400 transition-colors">
-                Phone
-              </span>
-            </a>
-          </div>
-
-          {/* Scroll Indicator */}
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-            <ChevronDown className="text-cyan-400" size={32} />
-          </div>
+      <section
+        id="home"
+        className="relative min-h-screen flex items-center justify-center overflow-hidden cyber-grid"
+      >
+        {/* Animated Background */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-20 left-10 w-72 h-72 bg-yellow-500/10 rounded-full blur-3xl animate-pulse"></div>
+          <div
+            className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse"
+            style={{ animationDelay: "1s" }}
+          ></div>
+          <div
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/5 rounded-full blur-3xl animate-pulse"
+            style={{ animationDelay: "2s" }}
+          ></div>
         </div>
-      </section>
 
-      {/* Skills Section */}
-      <section className="relative py-32 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2
-            className="text-6xl font-black mb-4 flex items-center gap-4"
-            style={{ fontFamily: "Orbitron, monospace" }}
-          >
-            <Zap className="text-yellow-400" size={48} />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-400">
-              SKILLS
-            </span>
-          </h2>
-          <p className="text-gray-400 mb-12 text-lg">
-            Core technologies & expertise
-          </p>
+        <div className="relative z-10 text-center px-6 max-w-6xl mx-auto">
+          {/* Main Title */}
+          <div className="mb-8 fade-in-up">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-yellow-500/10 border border-yellow-500/30 mb-6">
+              <Sparkles className="w-4 h-4 text-yellow-500" />
+              <span className="text-sm text-yellow-500 font-semibold orbitron">
+                Next Generation Mobility
+              </span>
+            </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            {skills.map((skill, idx) => (
-              <div
-                key={skill.name}
-                className="group"
-                style={{ animationDelay: `${idx * 100}ms` }}
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black orbitron mb-6 leading-tight">
+              <span className="text-gradient block">FUTURE IS</span>
+              <span className="text-white block mt-2">ELECTRIC</span>
+            </h1>
+
+            <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-10 leading-relaxed">
+              Experience the revolution of electric mobility with cutting-edge
+              technology, sustainable power, and unmatched performance.
+            </p>
+
+            {/* CTA Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <a
+                href="#models"
+                className="btn-futuristic group px-8 py-4 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-bold rounded-full flex items-center gap-2 hover:scale-105 transition-transform glow-yellow"
               >
-                <div className="flex items-center justify-between mb-3">
-                  <div className="flex items-center gap-3">
-                    <skill.icon
-                      className="text-cyan-400 group-hover:text-green-400 transition-colors"
-                      size={24}
-                    />
-                    <span className="text-xl font-semibold">{skill.name}</span>
-                  </div>
-                  <span className="text-cyan-400 font-mono">
-                    {skill.level}%
-                  </span>
+                Explore Models
+                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </a>
+              <a
+                href="#calculator"
+                className="btn-futuristic group px-8 py-4 bg-white/5 backdrop-blur-sm border border-yellow-500/30 text-white font-bold rounded-full flex items-center gap-2 hover:bg-white/10 transition-all"
+              >
+                <Calculator className="w-5 h-5" />
+                Calculate EMI
+              </a>
+            </div>
+          </div>
+
+          {/* Stats */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20 slide-in-left">
+            {[
+              { icon: Bike, label: "5+ Models", value: "Premium Range" },
+              { icon: Battery, label: "150 km", value: "Max Range" },
+              { icon: Gauge, label: "75 km/h", value: "Top Speed" },
+              { icon: Award, label: "100%", value: "Electric" },
+            ].map((stat, idx) => (
+              <div
+                key={idx}
+                className="holographic rounded-2xl p-6 relative overflow-hidden card-tilt"
+                style={{ animationDelay: `${idx * 0.1}s` }}
+              >
+                <stat.icon className="w-8 h-8 text-yellow-500 mb-3 mx-auto" />
+                <div className="text-2xl font-bold orbitron text-white mb-1">
+                  {stat.label}
                 </div>
-                <div className="h-3 bg-gray-800 rounded-full overflow-hidden border border-gray-700">
-                  <div
-                    className="h-full bg-gradient-to-r from-cyan-400 to-green-400 rounded-full transition-all duration-1000 ease-out shadow-lg shadow-cyan-500/50"
-                    style={{
-                      width: isLoaded ? `${skill.level}%` : "0%",
-                      transitionDelay: `${idx * 100}ms`,
-                    }}
-                  />
-                </div>
+                <div className="text-sm text-gray-400">{stat.value}</div>
               </div>
             ))}
           </div>
         </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+          <span className="text-yellow-500 text-sm orbitron">
+            Scroll to explore
+          </span>
+          <ChevronDown className="w-6 h-6 text-yellow-500" />
+        </div>
       </section>
 
-      {/* Projects Section */}
-      <section className="relative py-32 px-6 bg-gradient-to-b from-black via-gray-900 to-black">
-        <div className="max-w-6xl mx-auto">
-          <h2
-            className="text-6xl font-black mb-4 flex items-center gap-4"
-            style={{ fontFamily: "Orbitron, monospace" }}
-          >
-            <Briefcase className="text-purple-400" size={48} />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
-              PROJECTS
-            </span>
-          </h2>
-          <p className="text-gray-400 mb-12 text-lg">
-            Building enterprise solutions & innovative tools
-          </p>
+      {/* Products Section */}
+      <section
+        id="models"
+        className="relative py-24 px-6 bg-gradient-to-b from-slate-950 to-slate-900"
+      >
+        <div className="max-w-7xl mx-auto">
+          {/* Section Header */}
+          <div className="text-center mb-16 fade-in-up">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-500/10 border border-purple-500/30 mb-4">
+              <Star className="w-4 h-4 text-purple-500" />
+              <span className="text-sm text-purple-500 font-semibold orbitron">
+                Our Fleet
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-6xl font-black orbitron text-gradient mb-4">
+              ELECTRIC MODELS
+            </h2>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto">
+              Choose from our range of futuristic electric scooters designed for
+              every lifestyle
+            </p>
+          </div>
 
-          <div className="space-y-8">
-            {projects.map((project, idx) => (
+          {/* Products Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {productsData.map((product, idx) => (
               <div
-                key={project.title}
-                className="group border border-gray-800 rounded-2xl p-8 bg-gradient-to-br from-gray-900/50 to-black/50 backdrop-blur-sm hover:border-cyan-500/50 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-cyan-500/10"
-                style={{ animationDelay: `${idx * 150}ms` }}
-                onClick={() => {
-                  if (project.url) window.open(project.url, "_blank");
-                }}
+                key={product.id}
+                className="holographic rounded-3xl p-6 relative overflow-hidden group cursor-pointer card-tilt scan-line"
+                style={{ animationDelay: `${idx * 0.1}s` }}
               >
-                <div className="flex items-start justify-between mb-4">
+                {/* Product Image */}
+                <div className="relative mb-6 bg-gradient-to-br from-slate-800 to-slate-900 rounded-2xl p-8 h-48 flex items-center justify-center overflow-hidden">
+                  <div className="text-8xl float-animation group-hover:scale-110 transition-transform duration-500">
+                    {product.image}
+                  </div>
+                  {/* Badge */}
+                  <div className="absolute top-4 right-4 px-3 py-1 bg-yellow-500/20 backdrop-blur-sm rounded-full border border-yellow-500/30">
+                    <span className="text-xs font-bold text-yellow-500 orbitron">
+                      NEW
+                    </span>
+                  </div>
+                </div>
+
+                {/* Product Info */}
+                <div className="space-y-4">
                   <div>
-                    <h3 className="text-3xl font-bold mb-2 group-hover:text-cyan-400 transition-colors">
-                      {project.title}
+                    <h3 className="text-2xl font-bold orbitron text-white mb-1 group-hover:text-yellow-500 transition-colors">
+                      {product.name}
                     </h3>
-                    <div className="flex items-center gap-4 text-sm text-gray-400">
-                      <span className="font-mono">{project.period}</span>
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-semibold bg-gradient-to-r ${project.gradient} text-white`}
-                      >
-                        {project.status}
-                      </span>
+                    <p className="text-sm text-gray-400">{product.tagline}</p>
+                  </div>
+
+                  {/* Specs Grid */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <div className="bg-white/5 rounded-xl p-3 border border-white/10">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Gauge className="w-4 h-4 text-yellow-500" />
+                        <span className="text-xs text-gray-400">Range</span>
+                      </div>
+                      <div className="text-lg font-bold orbitron">
+                        {product.specs.range} km
+                      </div>
+                    </div>
+                    <div className="bg-white/5 rounded-xl p-3 border border-white/10">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Zap className="w-4 h-4 text-purple-500" />
+                        <span className="text-xs text-gray-400">Speed</span>
+                      </div>
+                      <div className="text-lg font-bold orbitron">
+                        {product.specs.topSpeed} km/h
+                      </div>
+                    </div>
+                    <div className="bg-white/5 rounded-xl p-3 border border-white/10">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Battery className="w-4 h-4 text-green-500" />
+                        <span className="text-xs text-gray-400">Battery</span>
+                      </div>
+                      <div className="text-lg font-bold orbitron">
+                        {product.specs.battery} kWh
+                      </div>
+                    </div>
+                    <div className="bg-white/5 rounded-xl p-3 border border-white/10">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Clock className="w-4 h-4 text-cyan-500" />
+                        <span className="text-xs text-gray-400">Charge</span>
+                      </div>
+                      <div className="text-lg font-bold orbitron">
+                        {product.specs.charging}h
+                      </div>
                     </div>
                   </div>
-                  <ExternalLink
-                    className="text-gray-600 group-hover:text-cyan-400 transition-colors"
-                    size={24}
-                  />
-                </div>
 
-                <p className="text-gray-300 text-lg mb-6 leading-relaxed">
-                  {project.description}
-                </p>
+                  {/* Color Options */}
+                  <div>
+                    <div className="text-xs text-gray-400 mb-2">
+                      Available Colors
+                    </div>
+                    <div className="flex gap-2">
+                      {product.colors.map((color, cidx) => (
+                        <div
+                          key={cidx}
+                          className="w-8 h-8 rounded-full border-2 border-white/20 cursor-pointer hover:scale-110 transition-transform"
+                          style={{ backgroundColor: color }}
+                        ></div>
+                      ))}
+                    </div>
+                  </div>
 
-                <div className="flex flex-wrap gap-2">
-                  {project.tech.map((tech) => (
-                    <span
-                      key={tech}
-                      className="px-4 py-2 bg-gray-800/80 border border-gray-700 rounded-lg text-sm font-mono text-cyan-400 hover:border-cyan-500 hover:bg-gray-700/80 transition-all duration-300"
+                  {/* Price & CTA */}
+                  <div className="pt-4 border-t border-white/10">
+                    <div className="flex items-center justify-between mb-4">
+                      <div>
+                        <div className="text-xs text-gray-400">Starting at</div>
+                        <div className="text-3xl font-black orbitron text-gradient">
+                          ₹{(product.price / 1000).toFixed(0)}K
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-xs text-gray-400">
+                          {product.variants.length} Variants
+                        </div>
+                        <div className="text-sm text-yellow-500 font-semibold">
+                          {product.variants.join(", ")}
+                        </div>
+                      </div>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setCalculatorData({
+                          ...calculatorData,
+                          model: product.price.toString(),
+                        });
+                        document
+                          .getElementById("calculator")
+                          .scrollIntoView({ behavior: "smooth" });
+                      }}
+                      className="w-full btn-futuristic py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-bold rounded-xl flex items-center justify-center gap-2 hover:scale-105 transition-transform"
                     >
-                      {tech}
-                    </span>
+                      Calculate EMI
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Calculator Section */}
+      <section
+        id="calculator"
+        className="relative py-24 px-6 bg-slate-950 cyber-grid"
+      >
+        <div className="max-w-4xl mx-auto">
+          {/* Section Header */}
+          <div className="text-center mb-16 fade-in-up">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/30 mb-4">
+              <Calculator className="w-4 h-4 text-cyan-500" />
+              <span className="text-sm text-cyan-500 font-semibold orbitron">
+                Finance
+              </span>
+            </div>
+            <h2 className="text-4xl md:text-6xl font-black orbitron text-gradient mb-4">
+              EMI CALCULATOR
+            </h2>
+            <p className="text-xl text-gray-400">
+              Calculate your monthly payment and own your dream electric scooter
+            </p>
+          </div>
+
+          {/* Calculator Card */}
+          <div className="holographic rounded-3xl p-8 md:p-12 neon-border">
+            <form onSubmit={calculateEMI} className="space-y-6">
+              {/* Model Selection */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-300 orbitron">
+                  Select Model
+                </label>
+                <select
+                  value={calculatorData.model}
+                  onChange={(e) =>
+                    setCalculatorData({
+                      ...calculatorData,
+                      model: e.target.value,
+                    })
+                  }
+                  required
+                  className="w-full px-6 py-4 bg-white/5 border border-yellow-500/30 rounded-xl text-white focus:outline-none focus:border-yellow-500 transition-colors"
+                >
+                  <option value="" className="bg-slate-900">
+                    Choose a model
+                  </option>
+                  {productsData.map((product) => (
+                    <option
+                      key={product.id}
+                      value={product.price}
+                      className="bg-slate-900"
+                    >
+                      {product.name} - ₹{product.price.toLocaleString()}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
+              {/* Down Payment */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-300 orbitron">
+                  Down Payment (₹)
+                </label>
+                <input
+                  type="number"
+                  value={calculatorData.downPayment}
+                  onChange={(e) =>
+                    setCalculatorData({
+                      ...calculatorData,
+                      downPayment: e.target.value,
+                    })
+                  }
+                  placeholder="Enter down payment amount"
+                  min="0"
+                  required
+                  className="w-full px-6 py-4 bg-white/5 border border-yellow-500/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-yellow-500 transition-colors"
+                />
+              </div>
+
+              {/* Loan Tenure */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-300 orbitron">
+                  Loan Tenure
+                </label>
+                <select
+                  value={calculatorData.tenure}
+                  onChange={(e) =>
+                    setCalculatorData({
+                      ...calculatorData,
+                      tenure: e.target.value,
+                    })
+                  }
+                  required
+                  className="w-full px-6 py-4 bg-white/5 border border-yellow-500/30 rounded-xl text-white focus:outline-none focus:border-yellow-500 transition-colors"
+                >
+                  <option value="" className="bg-slate-900">
+                    Select tenure
+                  </option>
+                  <option value="12" className="bg-slate-900">
+                    12 Months
+                  </option>
+                  <option value="24" className="bg-slate-900">
+                    24 Months
+                  </option>
+                  <option value="36" className="bg-slate-900">
+                    36 Months
+                  </option>
+                  <option value="48" className="bg-slate-900">
+                    48 Months
+                  </option>
+                </select>
+              </div>
+
+              {/* Interest Rate */}
+              <div className="space-y-2">
+                <label className="block text-sm font-semibold text-gray-300 orbitron">
+                  Interest Rate (% per annum)
+                </label>
+                <input
+                  type="number"
+                  value={calculatorData.interestRate}
+                  onChange={(e) =>
+                    setCalculatorData({
+                      ...calculatorData,
+                      interestRate: e.target.value,
+                    })
+                  }
+                  placeholder="Enter interest rate"
+                  min="0"
+                  max="30"
+                  step="0.1"
+                  required
+                  className="w-full px-6 py-4 bg-white/5 border border-yellow-500/30 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-yellow-500 transition-colors"
+                />
+              </div>
+
+              {/* Calculate Button */}
+              <button
+                type="submit"
+                className="w-full btn-futuristic py-5 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black font-bold rounded-xl text-lg orbitron hover:scale-105 transition-transform glow-yellow"
+              >
+                CALCULATE EMI
+              </button>
+            </form>
+
+            {/* Results */}
+            {emiResult && (
+              <div className="mt-10 space-y-4 scale-in">
+                <div className="h-px bg-gradient-to-r from-transparent via-yellow-500 to-transparent mb-8"></div>
+
+                <div className="grid grid-cols-2 gap-4">
+                  {[
+                    {
+                      label: "Vehicle Price",
+                      value: `₹${emiResult.vehiclePrice.toLocaleString()}`,
+                    },
+                    {
+                      label: "Down Payment",
+                      value: `₹${emiResult.downPayment.toLocaleString()}`,
+                    },
+                    {
+                      label: "Loan Amount",
+                      value: `₹${emiResult.loanAmount.toLocaleString()}`,
+                    },
+                    {
+                      label: "Total Interest",
+                      value: `₹${Math.round(emiResult.totalInterest).toLocaleString()}`,
+                    },
+                  ].map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="bg-white/5 rounded-xl p-4 border border-white/10"
+                    >
+                      <div className="text-xs text-gray-400 mb-1">
+                        {item.label}
+                      </div>
+                      <div className="text-xl font-bold orbitron text-white">
+                        {item.value}
+                      </div>
+                    </div>
                   ))}
                 </div>
+
+                {/* Monthly EMI - Highlighted */}
+                <div className="bg-gradient-to-r from-yellow-500/20 to-purple-500/20 rounded-2xl p-6 border-2 border-yellow-500/50 glow-yellow">
+                  <div className="text-center">
+                    <div className="text-sm text-gray-300 mb-2 orbitron">
+                      MONTHLY EMI
+                    </div>
+                    <div className="text-5xl font-black orbitron text-gradient">
+                      ₹{Math.round(emiResult.monthlyEMI).toLocaleString()}
+                    </div>
+                    <div className="text-sm text-gray-400 mt-2">
+                      for {emiResult.tenure} months
+                    </div>
+                  </div>
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Experience Section */}
-      <section className="relative py-32 px-6">
-        <div className="max-w-6xl mx-auto">
-          <h2
-            className="text-6xl font-black mb-4 flex items-center gap-4"
-            style={{ fontFamily: "Orbitron, monospace" }}
-          >
-            <Server className="text-blue-400" size={48} />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-400">
-              EXPERIENCE
-            </span>
-          </h2>
-          <p className="text-gray-400 mb-12 text-lg">Professional journey</p>
-
-          <div className="border-l-4 border-cyan-500 pl-8 space-y-12">
-            <div className="relative">
-              <div className="absolute -left-[42px] w-8 h-8 rounded-full bg-cyan-500 border-4 border-black" />
-              <div className="bg-gradient-to-br from-gray-900 to-gray-800 border border-gray-700 rounded-xl p-8 hover:border-cyan-500/50 transition-all duration-300">
-                <h3 className="text-2xl font-bold mb-2">Software Developer</h3>
-                <p className="text-cyan-400 mb-4 font-semibold">
-                  Mai Health Inc. • Aug 2024 - Mar 2025
-                </p>
-                <p className="text-gray-300 leading-relaxed">
-                  Led a team as Intermediate React Developer, building
-                  efficient, user-friendly web applications. Guided team through
-                  modern React development practices to ensure high-quality,
-                  scalable solutions.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Certifications Section */}
-      <section className="relative py-32 px-6 bg-gradient-to-b from-black to-gray-900">
-        <div className="max-w-6xl mx-auto">
-          <h2
-            className="text-6xl font-black mb-4 flex items-center gap-4"
-            style={{ fontFamily: "Orbitron, monospace" }}
-          >
-            <Award className="text-green-400" size={48} />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-400 to-emerald-400">
-              CERTIFICATIONS
-            </span>
-          </h2>
-          <p className="text-gray-400 mb-12 text-lg">
-            Continuous learning & professional development
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-6">
-            {certifications.map((cert, idx) => (
-              <div
-                key={cert.name}
-                className="border border-gray-800 rounded-xl p-6 bg-gradient-to-br from-gray-900/80 to-black/80 backdrop-blur-sm hover:border-green-500/50 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:shadow-green-500/10"
-                style={{ animationDelay: `${idx * 100}ms` }}
-              >
-                <Award className="text-green-400 mb-4" size={32} />
-                <h3 className="text-xl font-bold mb-2">{cert.name}</h3>
-                <p className="text-cyan-400 text-sm mb-1">{cert.org}</p>
-                <p className="text-gray-500 text-sm font-mono">{cert.date}</p>
-              </div>
-            ))}
+            )}
           </div>
         </div>
       </section>
 
       {/* Contact Section */}
-      <section className="relative py-32 px-6">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2
-            className="text-6xl font-black mb-8"
-            style={{ fontFamily: "Orbitron, monospace" }}
-          >
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-green-400 to-cyan-400 animate-gradient">
-              LET'S CONNECT
-            </span>
-          </h2>
-
-          <p className="text-2xl text-gray-300 mb-12">
-            Open to opportunities, collaborations, and interesting conversations
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-6 mb-12">
-            <div className="flex items-center gap-4 p-6 bg-gray-900 border border-gray-800 rounded-xl hover:border-cyan-500 transition-all duration-300">
-              <Mail className="text-cyan-400" size={28} />
-              <div className="text-left">
-                <div className="text-xs text-gray-500 mb-1">Email</div>
-                <div className="font-mono text-sm">
-                  Satyamgarodia1@gmail.com
-                </div>
-              </div>
-            </div>
-            <div className="flex items-center gap-4 p-6 bg-gray-900 border border-gray-800 rounded-xl hover:border-green-500 transition-all duration-300">
-              <Phone className="text-green-400" size={28} />
-              <div className="text-left">
-                <div className="text-xs text-gray-500 mb-1">Phone</div>
-                <div className="font-mono text-sm">+91 83403 70685</div>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex items-center justify-center gap-3 text-gray-500">
-            <MapPin size={20} className="text-cyan-400" />
-            <span>Gurgaon, Haryana, India</span>
-          </div>
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="relative border-t border-gray-800 py-8 px-6">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-gray-500 font-mono text-sm">
-            © 2026 Satyam Garodia
-          </p>
-          <p className="text-gray-700 font-mono text-xs mt-2">
-            {"</>"} with passion & precision
-          </p>
-        </div>
-      </footer>
-
-      <style jsx>{`
-        @import url("https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap");
-
-        @keyframes scan {
-          0% {
-            transform: translateY(-100%);
-          }
-          100% {
-            transform: translateY(100vh);
-          }
-        }
-
-        .animate-scan {
-          animation: scan 8s linear infinite;
-        }
-
-        @keyframes gradient {
-          0%,
-          100% {
-            background-position: 0% 50%;
-          }
-          50% {
-            background-position: 100% 50%;
-          }
-        }
-
-        .animate-gradient {
-          background-size: 200% 200%;
-          animation: gradient 3s ease infinite;
-        }
-
-        .glitch {
-          animation: glitch 0.3s linear;
-        }
-
-        @keyframes glitch {
-          0% {
-            transform: translate(0);
-          }
-          20% {
-            transform: translate(-2px, 2px);
-          }
-          40% {
-            transform: translate(-2px, -2px);
-          }
-          60% {
-            transform: translate(2px, 2px);
-          }
-          80% {
-            transform: translate(2px, -2px);
-          }
-          100% {
-            transform: translate(0);
-          }
-        }
-
-        .delay-100 {
-          animation-delay: 0.1s;
-        }
-
-        .delay-200 {
-          animation-delay: 0.2s;
-        }
-      `}</style>
+      <div className="my-1">
+        <Contact />
+      </div>
+      <Footer />
     </div>
   );
-};
-
-export default Portfolio;
+}

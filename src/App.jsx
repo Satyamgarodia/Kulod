@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { GoogleGeminiEffectDemo } from "./Home";
-import Portfolio from "./Portfolio1";
+import Portfolio1 from "./Portfolio1";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       {/* <GoogleGeminiEffectDemo /> */}
-      <Portfolio />
+      <Portfolio1 />
     </>
   );
 }

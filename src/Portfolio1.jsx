@@ -16,6 +16,7 @@ import Contact from "./components/Contact";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import CyberModels from "./components/VehicleCard";
+import Grainient from "./Grainient";
 
 // Products Data - Easily Scalable
 const productsData = [
@@ -167,13 +168,43 @@ export default function ZelioWebsite() {
   };
 
   return (
-    <div className="bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 text-white min-h-screen overflow-x-hidden">
+    <div className="relative text-white min-h-screen overflow-x-hidden">
+      {/* Grainient Background */}
+      <div className="fixed inset-0 z-0">
+        <Grainient
+          color1="#051406"
+          color2="#01510a"
+          color3="#1b8d28"
+          timeSpeed={0.25}
+          colorBalance={-0.1}
+          warpStrength={1}
+          warpFrequency={5}
+          warpSpeed={1.4}
+          warpAmplitude={45}
+          blendAngle={59}
+          blendSoftness={0.14}
+          rotationAmount={500}
+          noiseScale={2}
+          grainAmount={0.1}
+          grainScale={2}
+          grainAnimated={false}
+          contrast={1.5}
+          gamma={1}
+          saturation={1}
+          centerX={0}
+          centerY={0}
+          zoom={0.95}
+        />
+      </div>
+
+      {/* Content Layer */}
+      <div className="relative z-10">
       <Navbar />
       <Hero />
 
       {/* Features Section */}
       <section className="relative py-20 px-6 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-yellow-500/5 to-transparent pointer-events-none"></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-green-500/5 to-transparent pointer-events-none"></div>
         
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -226,11 +257,11 @@ export default function ZelioWebsite() {
         className="relative py-32 px-6 overflow-hidden"
       >
         {/* Animated Background Grid */}
-        <div className="absolute inset-0 cyber-grid opacity-30"></div>
+        <div className="absolute inset-0 cyber-grid opacity-10"></div>
         
         {/* Gradient Overlays */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-yellow-500/10 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-green-500/5 rounded-full blur-3xl"></div>
 
         <div className="max-w-5xl mx-auto relative z-10">
           {/* Header */}
@@ -495,6 +526,7 @@ export default function ZelioWebsite() {
       </div>
       
       <Footer />
+      </div>
     </div>
   );
 }

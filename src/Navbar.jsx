@@ -43,7 +43,7 @@ export default function Navbar() {
               });
             }}
           >
-            ZELIO
+            KULOD
           </a>
 
           {/* Desktop Navigation */}

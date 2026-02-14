@@ -6,7 +6,6 @@ import Hero from "./components/Hero";
 import VehicleModels from "./components/VehicleCard";
 
 export default function ZelioWebsite() {
-  const [scrollY, setScrollY] = useState(0);
   const [calculatorData, setCalculatorData] = useState({
     model: "",
     downPayment: "",
@@ -19,8 +18,6 @@ export default function ZelioWebsite() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrollY(window.scrollY);
-      
       const calculatorSection = document.getElementById('calculator');
       if (calculatorSection) {
         const rect = calculatorSection.getBoundingClientRect();
@@ -73,29 +70,41 @@ export default function ZelioWebsite() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-x-hidden bg-[#f5f3ee]">
+    <div className="min-h-screen bg-[#f5f3ee] text-[#0a0e0d]">
       
       <Navbar />
       <Hero />
       <VehicleModels setCalculatorData={setCalculatorData} />
 
       {/* Features Section */}
-      <section id="features" className="py-24 px-6 bg-[#f5f3ee]">
-        <div className="max-w-[1400px] mx-auto">
+      <section id="features" className="py-32 px-8 md:px-16 lg:px-24 bg-[#f5f3ee]">
+        <div className="max-w-[1600px] mx-auto">
           
           {/* Header */}
-          <div className={`text-center mb-16 transition-all duration-700 ${isFeaturesVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
-            <div className="section-subtitle mb-4">Why Choose Zelio</div>
-            <h2 className="font-display text-[clamp(2.5rem,5vw,4rem)] font-bold text-[#0a0e0d] mb-6">
+          <div className={`text-center mb-24 transition-all duration-700 ${isFeaturesVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+            <div 
+              className="text-sm tracking-widest uppercase mb-6 text-[#8ea989] font-semibold"
+              style={{ letterSpacing: '0.15em' }}
+            >
+              Why Choose Zelio
+            </div>
+            <h2 
+              className="font-bold text-[#0a0e0d] mb-8"
+              style={{ 
+                fontFamily: 'Playfair Display, serif',
+                fontSize: 'clamp(2.5rem, 5vw, 5rem)',
+                letterSpacing: '-0.02em'
+              }}
+            >
               Engineering Excellence
             </h2>
-            <p className="text-lg text-[#6b7570] max-w-2xl mx-auto">
+            <p className="text-xl text-[#6b7570] max-w-3xl mx-auto leading-relaxed">
               Every detail crafted for the perfect ride
             </p>
           </div>
 
           {/* Features Grid */}
-          <div className="grid md:grid-cols-3 gap-16">
+          <div className="grid md:grid-cols-3 gap-20">
             {[
               {
                 icon: "⚡",
@@ -133,13 +142,21 @@ export default function ZelioWebsite() {
                 className={`text-center transition-all duration-700 ${isFeaturesVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
                 style={{ transitionDelay: `${idx * 100}ms` }}
               >
-                <div className="w-20 h-20 hexagon bg-[#0a0e0d] text-[#f5f3ee] flex items-center justify-center text-4xl mx-auto mb-8">
+                <div 
+                  className="w-24 h-24 hexagon bg-[#0a0e0d] text-[#f5f3ee] flex items-center justify-center text-5xl mx-auto mb-10"
+                  style={{
+                    clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)'
+                  }}
+                >
                   {feature.icon}
                 </div>
-                <h3 className="font-display text-2xl font-bold text-[#0a0e0d] mb-4">
+                <h3 
+                  className="text-3xl font-bold text-[#0a0e0d] mb-6"
+                  style={{ fontFamily: 'Playfair Display, serif' }}
+                >
                   {feature.title}
                 </h3>
-                <p className="text-[#6b7570] leading-relaxed">
+                <p className="text-[#6b7570] leading-[1.8] text-lg">
                   {feature.description}
                 </p>
               </div>
@@ -151,7 +168,7 @@ export default function ZelioWebsite() {
       {/* EMI Calculator */}
       <section
         id="calculator"
-        className={`py-24 px-6 relative overflow-hidden transition-all duration-700 ${
+        className={`py-32 px-8 md:px-16 lg:px-24 relative overflow-hidden transition-all duration-700 ${
           isCalculatorVisible ? "opacity-100" : "opacity-0"
         }`}
       >
@@ -159,24 +176,30 @@ export default function ZelioWebsite() {
         <div className="absolute inset-0 bg-gradient-to-br from-[#8ea989] to-[#c8e5c0]"></div>
         <div className="absolute inset-0 dots-pattern"></div>
 
-        <div className="max-w-[900px] mx-auto relative z-10">
+        <div className="max-w-[1000px] mx-auto relative z-10">
           
           {/* Header */}
-          <div className="text-center mb-12">
-            <div className="inline-block px-6 py-3 bg-[#0a0e0d] text-[#f5f3ee] text-xs uppercase tracking-widest font-semibold mb-6">
+          <div className="text-center mb-16">
+            <div className="inline-block px-8 py-4 bg-[#0a0e0d] text-[#f5f3ee] text-xs uppercase tracking-widest font-semibold mb-8">
               Finance
             </div>
-            <h2 className="font-display text-[clamp(2.5rem,5vw,4rem)] font-bold text-[#0a0e0d] mb-6">
+            <h2 
+              className="font-bold text-[#0a0e0d] mb-8"
+              style={{ 
+                fontFamily: 'Playfair Display, serif',
+                fontSize: 'clamp(2.5rem, 5vw, 5rem)'
+              }}
+            >
               EMI Calculator
             </h2>
-            <p className="text-lg text-[#0a0e0d]/70 max-w-2xl mx-auto">
+            <p className="text-xl text-[#0a0e0d]/70 max-w-3xl mx-auto leading-relaxed">
               Plan your purchase with our easy EMI calculator
             </p>
           </div>
 
           {/* Calculator Form */}
-          <div className="bg-[#f5f3ee] p-16">
-            <form onSubmit={calculateEMI} className="space-y-8">
+          <div className="bg-[#f5f3ee] p-16 rounded-lg">
+            <form onSubmit={calculateEMI} className="space-y-10">
               
               {/* Vehicle Price */}
               <div>

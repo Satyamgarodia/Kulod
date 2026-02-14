@@ -1,111 +1,9 @@
 import React, { useState, useEffect } from "react";
-import {
-  Calculator,
-  ArrowRight,
-  Check,
-  TrendingUp,
-  Zap,
-  Shield,
-  Award,
-  Battery,
-  Gauge,
-  Clock,
-} from "lucide-react";
 import Footer from "./components/Footer";
 import Contact from "./components/Contact";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
-import CyberModels from "./components/VehicleCard";
-import Grainient from "./Grainient";
-
-// Products Data - Easily Scalable
-const productsData = [
-  {
-    id: 1,
-    name: "Zelio Urban",
-    tagline: "Perfect for city commute",
-    price: 65000,
-    image: "🛵",
-    specs: {
-      range: "80",
-      topSpeed: "45",
-      battery: "2.3",
-      charging: "4-5",
-    },
-    colors: ["#FFFFFF", "#000000", "#4A90E2"],
-    variants: ["Standard", "Pro"],
-    features: ["Smart Display", "Anti-theft", "USB Charging"],
-  },
-  {
-    id: 2,
-    name: "Zelio Sport",
-    tagline: "Power meets style",
-    price: 85000,
-    image: "🏍️",
-    specs: {
-      range: "100",
-      topSpeed: "60",
-      battery: "3.2",
-      charging: "5-6",
-    },
-    colors: ["#E63946", "#C0C0C0", "#000000"],
-    variants: ["Standard", "Pro", "Elite"],
-    features: ["Sport Mode", "LED Lights", "Digital Console", "Cruise Control"],
-  },
-  {
-    id: 3,
-    name: "Zelio Cargo",
-    tagline: "Built for business",
-    price: 95000,
-    image: "🚚",
-    specs: {
-      range: "90",
-      topSpeed: "40",
-      battery: "3.5",
-      charging: "6-7",
-    },
-    colors: ["#808080", "#FDB813", "#FFFFFF"],
-    variants: ["Standard", "Heavy Duty"],
-    features: ["Large Cargo Space", "Reinforced Frame", "Commercial GPS"],
-  },
-  {
-    id: 4,
-    name: "Zelio Classic",
-    tagline: "Timeless elegance",
-    price: 55000,
-    image: "🛴",
-    specs: {
-      range: "70",
-      topSpeed: "40",
-      battery: "2.0",
-      charging: "3-4",
-    },
-    colors: ["#F5E6D3", "#8B4513", "#2D5016"],
-    variants: ["Standard"],
-    features: ["Retro Design", "Comfort Seat", "Easy Maintenance"],
-  },
-  {
-    id: 5,
-    name: "Zelio Pro Max",
-    tagline: "Ultimate performance",
-    price: 125000,
-    image: "⚡",
-    specs: {
-      range: "150",
-      topSpeed: "75",
-      battery: "4.8",
-      charging: "7-8",
-    },
-    colors: ["#000000", "#E63946", "#4A90E2", "#C0C0C0"],
-    variants: ["Pro", "Elite"],
-    features: [
-      "Fast Charging",
-      "Premium Suspension",
-      "Smart Connectivity",
-      "Advanced Safety",
-    ],
-  },
-];
+import VehicleModels from "./components/VehicleCard";
 
 export default function ZelioWebsite() {
   const [scrollY, setScrollY] = useState(0);
@@ -117,22 +15,29 @@ export default function ZelioWebsite() {
   });
   const [emiResult, setEmiResult] = useState(null);
   const [isCalculatorVisible, setIsCalculatorVisible] = useState(false);
+  const [isFeaturesVisible, setIsFeaturesVisible] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
       setScrollY(window.scrollY);
       
-      // Check if calculator section is in view
       const calculatorSection = document.getElementById('calculator');
       if (calculatorSection) {
         const rect = calculatorSection.getBoundingClientRect();
         const isVisible = rect.top < window.innerHeight * 0.75 && rect.bottom > 0;
         setIsCalculatorVisible(isVisible);
       }
+
+      const featuresSection = document.getElementById('features');
+      if (featuresSection) {
+        const rect = featuresSection.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight * 0.75 && rect.bottom > 0;
+        setIsFeaturesVisible(isVisible);
+      }
     };
     
     window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Initial check
+    handleScroll();
     
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -168,171 +73,136 @@ export default function ZelioWebsite() {
   };
 
   return (
-    <div className="relative text-white min-h-screen overflow-x-hidden">
-      {/* Grainient Background */}
-      <div className="fixed inset-0 z-0">
-        <Grainient
-          color1="#051406"
-          color2="#01510a"
-          color3="#1b8d28"
-          timeSpeed={0.25}
-          colorBalance={-0.1}
-          warpStrength={1}
-          warpFrequency={5}
-          warpSpeed={1.4}
-          warpAmplitude={45}
-          blendAngle={59}
-          blendSoftness={0.14}
-          rotationAmount={500}
-          noiseScale={2}
-          grainAmount={0.1}
-          grainScale={2}
-          grainAnimated={false}
-          contrast={1.5}
-          gamma={1}
-          saturation={1}
-          centerX={0}
-          centerY={0}
-          zoom={0.95}
-        />
-      </div>
-
-      {/* Content Layer */}
-      <div className="relative z-10">
+    <div className="relative min-h-screen overflow-x-hidden bg-[#f5f3ee]">
+      
       <Navbar />
       <Hero />
+      <VehicleModels setCalculatorData={setCalculatorData} />
 
       {/* Features Section */}
-      <section className="relative py-20 px-6 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-green-500/5 to-transparent pointer-events-none"></div>
-        
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <section id="features" className="py-24 px-6 bg-[#f5f3ee]">
+        <div className="max-w-[1400px] mx-auto">
+          
+          {/* Header */}
+          <div className={`text-center mb-16 transition-all duration-700 ${isFeaturesVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+            <div className="section-subtitle mb-4">Why Choose Zelio</div>
+            <h2 className="font-display text-[clamp(2.5rem,5vw,4rem)] font-bold text-[#0a0e0d] mb-6">
+              Engineering Excellence
+            </h2>
+            <p className="text-lg text-[#6b7570] max-w-2xl mx-auto">
+              Every detail crafted for the perfect ride
+            </p>
+          </div>
+
+          {/* Features Grid */}
+          <div className="grid md:grid-cols-3 gap-16">
             {[
               {
-                icon: Zap,
-                title: "Instant Power",
-                description: "Zero emissions, maximum performance",
-                color: "from-yellow-500 to-orange-500"
+                icon: "⚡",
+                title: "Powerful Performance",
+                description: "State-of-the-art motors delivering exceptional acceleration and top speeds for thrilling rides.",
               },
               {
-                icon: Shield,
-                title: "Industry Leading Warranty",
-                description: "Up to 4 years comprehensive coverage",
-                color: "from-cyan-500 to-blue-500"
+                icon: "🔋",
+                title: "Extended Range",
+                description: "Advanced battery technology ensuring you reach your destination without range anxiety.",
               },
               {
-                icon: Award,
-                title: "Award Winning Design",
-                description: "Recognized for innovation and excellence",
-                color: "from-purple-500 to-pink-500"
-              }
+                icon: "🛡️",
+                title: "Premium Safety",
+                description: "Industry-leading safety features with comprehensive warranty coverage for peace of mind.",
+              },
+              {
+                icon: "🌿",
+                title: "Eco-Friendly",
+                description: "Zero emissions, sustainable materials, and renewable energy compatible charging systems.",
+              },
+              {
+                icon: "📱",
+                title: "Smart Technology",
+                description: "Connected features, digital displays, and app integration for a seamless riding experience.",
+              },
+              {
+                icon: "⚙️",
+                title: "Low Maintenance",
+                description: "Simplified mechanics and robust build quality mean fewer visits to the service center.",
+              },
             ].map((feature, idx) => (
               <div
                 key={idx}
-                className="group relative bg-gradient-to-br from-white/5 to-white/[0.02] backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-yellow-500/50 transition-all duration-500 hover:scale-105"
-                style={{ animationDelay: `${idx * 150}ms` }}
+                className={`text-center transition-all duration-700 ${isFeaturesVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
+                style={{ transitionDelay: `${idx * 100}ms` }}
               >
-                <div className="absolute inset-0 bg-gradient-to-br opacity-0 group-hover:opacity-10 rounded-2xl transition-opacity duration-500"
-                     style={{ backgroundImage: `linear-gradient(135deg, ${feature.color.split(' ')[1]}, ${feature.color.split(' ')[3]})` }}></div>
-                
-                <div className={`inline-flex p-4 rounded-xl bg-gradient-to-br ${feature.color} mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                  <feature.icon className="w-8 h-8 text-white" />
+                <div className="w-20 h-20 hexagon bg-[#0a0e0d] text-[#f5f3ee] flex items-center justify-center text-4xl mx-auto mb-8">
+                  {feature.icon}
                 </div>
-                
-                <h3 className="text-2xl font-bold mb-3 orbitron">{feature.title}</h3>
-                <p className="text-gray-400 leading-relaxed">{feature.description}</p>
+                <h3 className="font-display text-2xl font-bold text-[#0a0e0d] mb-4">
+                  {feature.title}
+                </h3>
+                <p className="text-[#6b7570] leading-relaxed">
+                  {feature.description}
+                </p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Models Section */}
-      <CyberModels setCalculatorData={setCalculatorData} />
-
-      {/* Calculator Section */}
+      {/* EMI Calculator */}
       <section
         id="calculator"
-        className="relative py-32 px-6 overflow-hidden"
+        className={`py-24 px-6 relative overflow-hidden transition-all duration-700 ${
+          isCalculatorVisible ? "opacity-100" : "opacity-0"
+        }`}
       >
-        {/* Animated Background Grid */}
-        <div className="absolute inset-0 cyber-grid opacity-10"></div>
-        
-        {/* Gradient Overlays */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-green-500/5 rounded-full blur-3xl"></div>
+        {/* Background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-[#8ea989] to-[#c8e5c0]"></div>
+        <div className="absolute inset-0 dots-pattern"></div>
 
-        <div className="max-w-5xl mx-auto relative z-10">
+        <div className="max-w-[900px] mx-auto relative z-10">
+          
           {/* Header */}
-          <div className={`text-center mb-16 transition-all duration-1000 ${isCalculatorVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/30 mb-6">
-              <Calculator className="w-5 h-5 text-yellow-500" />
-              <span className="text-sm text-yellow-500 font-bold orbitron tracking-wider">
-                FINANCE CALCULATOR
-              </span>
+          <div className="text-center mb-12">
+            <div className="inline-block px-6 py-3 bg-[#0a0e0d] text-[#f5f3ee] text-xs uppercase tracking-widest font-semibold mb-6">
+              Finance
             </div>
-            
-            <h2 className="text-5xl md:text-7xl font-black orbitron mb-6">
-              <span className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 bg-clip-text text-transparent">
-                Calculate Your EMI
-              </span>
+            <h2 className="font-display text-[clamp(2.5rem,5vw,4rem)] font-bold text-[#0a0e0d] mb-6">
+              EMI Calculator
             </h2>
-            
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto leading-relaxed">
-              Find the perfect payment plan for your dream electric scooter with our smart calculator
+            <p className="text-lg text-[#0a0e0d]/70 max-w-2xl mx-auto">
+              Plan your purchase with our easy EMI calculator
             </p>
           </div>
 
-          {/* Calculator Card */}
-          <div className={`relative bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-xl rounded-3xl p-8 md:p-12 border border-white/20 shadow-2xl transition-all duration-1000 delay-200 ${isCalculatorVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-            {/* Decorative corner accents */}
-            <div className="absolute top-0 left-0 w-20 h-20 border-t-2 border-l-2 border-yellow-500/50 rounded-tl-3xl"></div>
-            <div className="absolute bottom-0 right-0 w-20 h-20 border-b-2 border-r-2 border-yellow-500/50 rounded-br-3xl"></div>
-
+          {/* Calculator Form */}
+          <div className="bg-[#f5f3ee] p-16">
             <form onSubmit={calculateEMI} className="space-y-8">
-              {/* Model Selection */}
-              <div className="space-y-3 group">
-                <label className="flex items-center gap-2 text-sm font-bold text-gray-300 orbitron tracking-wide">
-                  <Battery className="w-4 h-4 text-yellow-500" />
-                  SELECT YOUR MODEL
+              
+              {/* Vehicle Price */}
+              <div>
+                <label className="block text-sm uppercase tracking-widest font-semibold text-[#0a0e0d] mb-3">
+                  Vehicle Price (₹)
                 </label>
-                <div className="relative">
-                  <select
-                    value={calculatorData.model}
-                    onChange={(e) =>
-                      setCalculatorData({
-                        ...calculatorData,
-                        model: e.target.value,
-                      })
-                    }
-                    required
-                    className="w-full px-6 py-5 bg-white/5 border-2 border-white/10 rounded-2xl text-white text-lg focus:outline-none focus:border-yellow-500/70 focus:bg-white/10 transition-all duration-300 appearance-none cursor-pointer hover:border-yellow-500/30"
-                  >
-                    <option value="" className="bg-slate-900">
-                      Choose your electric scooter
-                    </option>
-                    {productsData.map((product) => (
-                      <option
-                        key={product.id}
-                        value={product.price}
-                        className="bg-slate-900 py-2"
-                      >
-                        {product.name} - ₹{product.price.toLocaleString()}
-                      </option>
-                    ))}
-                  </select>
-                  <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none">
-                    <ArrowRight className="w-5 h-5 text-gray-400 rotate-90" />
-                  </div>
-                </div>
+                <input
+                  type="number"
+                  value={calculatorData.model}
+                  onChange={(e) =>
+                    setCalculatorData({
+                      ...calculatorData,
+                      model: e.target.value,
+                    })
+                  }
+                  placeholder="Enter vehicle price"
+                  min="0"
+                  required
+                  className="w-full px-5 py-5 border-2 border-[#0a0e0d] bg-transparent text-[#0a0e0d] text-lg placeholder-[#6b7570] focus:border-[#8ea989] focus:bg-[#8ea989]/5 transition-all"
+                />
               </div>
 
               {/* Down Payment */}
-              <div className="space-y-3 group">
-                <label className="flex items-center gap-2 text-sm font-bold text-gray-300 orbitron tracking-wide">
-                  <TrendingUp className="w-4 h-4 text-yellow-500" />
-                  DOWN PAYMENT (₹)
+              <div>
+                <label className="block text-sm uppercase tracking-widest font-semibold text-[#0a0e0d] mb-3">
+                  Down Payment (₹)
                 </label>
                 <input
                   type="number"
@@ -346,57 +216,38 @@ export default function ZelioWebsite() {
                   placeholder="Enter down payment amount"
                   min="0"
                   required
-                  className="w-full px-6 py-5 bg-white/5 border-2 border-white/10 rounded-2xl text-white text-lg placeholder-gray-500 focus:outline-none focus:border-yellow-500/70 focus:bg-white/10 transition-all duration-300"
+                  className="w-full px-5 py-5 border-2 border-[#0a0e0d] bg-transparent text-[#0a0e0d] text-lg placeholder-[#6b7570] focus:border-[#8ea989] focus:bg-[#8ea989]/5 transition-all"
                 />
               </div>
 
-              {/* Grid for Tenure and Interest */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Tenure */}
-                <div className="space-y-3 group">
-                  <label className="flex items-center gap-2 text-sm font-bold text-gray-300 orbitron tracking-wide">
-                    <Clock className="w-4 h-4 text-yellow-500" />
-                    LOAN TENURE
+              {/* Tenure & Interest */}
+              <div className="grid md:grid-cols-2 gap-8">
+                <div>
+                  <label className="block text-sm uppercase tracking-widest font-semibold text-[#0a0e0d] mb-3">
+                    Loan Tenure
                   </label>
-                  <div className="relative">
-                    <select
-                      value={calculatorData.tenure}
-                      onChange={(e) =>
-                        setCalculatorData({
-                          ...calculatorData,
-                          tenure: e.target.value,
-                        })
-                      }
-                      required
-                      className="w-full px-6 py-5 bg-white/5 border-2 border-white/10 rounded-2xl text-white text-lg focus:outline-none focus:border-yellow-500/70 focus:bg-white/10 transition-all duration-300 appearance-none cursor-pointer hover:border-yellow-500/30"
-                    >
-                      <option value="" className="bg-slate-900">
-                        Select tenure
-                      </option>
-                      <option value="12" className="bg-slate-900">
-                        12 Months
-                      </option>
-                      <option value="24" className="bg-slate-900">
-                        24 Months
-                      </option>
-                      <option value="36" className="bg-slate-900">
-                        36 Months
-                      </option>
-                      <option value="48" className="bg-slate-900">
-                        48 Months
-                      </option>
-                    </select>
-                    <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none">
-                      <ArrowRight className="w-5 h-5 text-gray-400 rotate-90" />
-                    </div>
-                  </div>
+                  <select
+                    value={calculatorData.tenure}
+                    onChange={(e) =>
+                      setCalculatorData({
+                        ...calculatorData,
+                        tenure: e.target.value,
+                      })
+                    }
+                    required
+                    className="w-full px-5 py-5 border-2 border-[#0a0e0d] bg-transparent text-[#0a0e0d] text-lg focus:border-[#8ea989] focus:bg-[#8ea989]/5 transition-all cursor-pointer"
+                  >
+                    <option value="">Select tenure</option>
+                    <option value="12">12 Months</option>
+                    <option value="24">24 Months</option>
+                    <option value="36">36 Months</option>
+                    <option value="48">48 Months</option>
+                  </select>
                 </div>
 
-                {/* Interest Rate */}
-                <div className="space-y-3 group">
-                  <label className="flex items-center gap-2 text-sm font-bold text-gray-300 orbitron tracking-wide">
-                    <Gauge className="w-4 h-4 text-yellow-500" />
-                    INTEREST RATE (% P.A.)
+                <div>
+                  <label className="block text-sm uppercase tracking-widest font-semibold text-[#0a0e0d] mb-3">
+                    Interest Rate (% p.a.)
                   </label>
                   <input
                     type="number"
@@ -412,68 +263,43 @@ export default function ZelioWebsite() {
                     max="30"
                     step="0.1"
                     required
-                    className="w-full px-6 py-5 bg-white/5 border-2 border-white/10 rounded-2xl text-white text-lg placeholder-gray-500 focus:outline-none focus:border-yellow-500/70 focus:bg-white/10 transition-all duration-300"
+                    className="w-full px-5 py-5 border-2 border-[#0a0e0d] bg-transparent text-[#0a0e0d] text-lg placeholder-[#6b7570] focus:border-[#8ea989] focus:bg-[#8ea989]/5 transition-all"
                   />
                 </div>
               </div>
 
-              {/* Submit Button */}
+              {/* Submit */}
               <button
                 type="submit"
-                className="group relative w-full py-6 bg-gradient-to-r from-yellow-500 via-yellow-600 to-orange-600 text-black font-black rounded-2xl text-lg orbitron overflow-hidden shadow-2xl shadow-yellow-500/20 hover:shadow-yellow-500/40 transition-all duration-300 hover:scale-[1.02]"
+                className="w-full py-6 bg-[#0a0e0d] text-[#f5f3ee] text-lg font-semibold uppercase tracking-wide hover:bg-[#1a1f1e] transition-all"
               >
-                <span className="relative z-10 flex items-center justify-center gap-3">
-                  CALCULATE YOUR EMI
-                  <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                </span>
-                <div className="absolute inset-0 bg-gradient-to-r from-orange-600 to-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                Calculate EMI
               </button>
             </form>
 
-            {/* EMI Results */}
+            {/* Results */}
             {emiResult && (
-              <div className="mt-12 space-y-6 animate-fade-up">
+              <div className="mt-12 space-y-8 animate-fade-up">
+                
                 {/* Divider */}
-                <div className="relative h-px my-8">
-                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-yellow-500 to-transparent"></div>
-                </div>
+                <div className="h-px bg-gradient-to-r from-transparent via-[#8ea989] to-transparent"></div>
 
                 {/* Details Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
                   {[
-                    {
-                      label: "Vehicle Price",
-                      value: `₹${emiResult.vehiclePrice.toLocaleString()}`,
-                      icon: Battery,
-                    },
-                    {
-                      label: "Down Payment",
-                      value: `₹${emiResult.downPayment.toLocaleString()}`,
-                      icon: TrendingUp,
-                    },
-                    {
-                      label: "Loan Amount",
-                      value: `₹${emiResult.loanAmount.toLocaleString()}`,
-                      icon: Calculator,
-                    },
-                    {
-                      label: "Total Interest",
-                      value: `₹${Math.round(emiResult.totalInterest).toLocaleString()}`,
-                      icon: Gauge,
-                    },
+                    { label: "Vehicle Price", value: `₹${emiResult.vehiclePrice.toLocaleString()}` },
+                    { label: "Down Payment", value: `₹${emiResult.downPayment.toLocaleString()}` },
+                    { label: "Loan Amount", value: `₹${emiResult.loanAmount.toLocaleString()}` },
+                    { label: "Total Interest", value: `₹${Math.round(emiResult.totalInterest).toLocaleString()}` },
                   ].map((item, idx) => (
                     <div
                       key={idx}
-                      className="bg-gradient-to-br from-white/10 to-white/5 rounded-2xl p-5 border border-white/10 hover:border-yellow-500/30 transition-all duration-300 group"
-                      style={{ animationDelay: `${idx * 100}ms` }}
+                      className="text-center p-6 bg-[#0a0e0d]/5"
                     >
-                      <div className="flex items-start justify-between mb-3">
-                        <div className="text-xs text-gray-400 font-semibold orbitron">
-                          {item.label}
-                        </div>
-                        <item.icon className="w-4 h-4 text-yellow-500/50 group-hover:text-yellow-500 transition-colors" />
+                      <div className="text-xs uppercase tracking-widest text-[#6b7570] mb-3">
+                        {item.label}
                       </div>
-                      <div className="text-2xl font-black orbitron bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+                      <div className="font-display text-2xl font-bold text-[#0a0e0d]">
                         {item.value}
                       </div>
                     </div>
@@ -481,37 +307,16 @@ export default function ZelioWebsite() {
                 </div>
 
                 {/* Monthly EMI Highlight */}
-                <div className="relative bg-gradient-to-br from-yellow-500/20 via-orange-500/20 to-yellow-500/20 rounded-3xl p-8 border-2 border-yellow-500/50 overflow-hidden group">
-                  {/* Animated background effect */}
-                  <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/0 via-yellow-500/10 to-yellow-500/0 group-hover:animate-pulse"></div>
-                  
-                  <div className="relative z-10">
-                    <div className="flex items-center justify-center gap-2 mb-4">
-                      <Check className="w-5 h-5 text-yellow-500" />
-                      <div className="text-sm text-gray-300 font-bold orbitron tracking-wider">
-                        YOUR MONTHLY PAYMENT
-                      </div>
-                    </div>
-                    
-                    <div className="text-center">
-                      <div className="text-6xl md:text-7xl font-black orbitron mb-2">
-                        <span className="bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-500 bg-clip-text text-transparent">
-                          ₹{Math.round(emiResult.monthlyEMI).toLocaleString()}
-                        </span>
-                      </div>
-                      <div className="text-sm text-gray-400 flex items-center justify-center gap-2">
-                        <Clock className="w-4 h-4" />
-                        for {emiResult.tenure} months
-                      </div>
-                    </div>
+                <div className="bg-[#0a0e0d] text-[#f5f3ee] p-12 text-center">
+                  <div className="text-sm uppercase tracking-widest mb-4 opacity-70">
+                    Your Monthly Payment
                   </div>
-                </div>
-
-                {/* Additional Info */}
-                <div className="bg-gradient-to-r from-cyan-500/10 to-blue-500/10 rounded-2xl p-6 border border-cyan-500/20">
-                  <p className="text-sm text-gray-300 text-center leading-relaxed">
-                    <span className="text-cyan-400 font-semibold">💡 Pro Tip:</span> Lower down payment means higher EMI. Adjust your down payment to find the perfect monthly budget for you.
-                  </p>
+                  <div className="font-display text-6xl font-extrabold mb-2">
+                    ₹{Math.round(emiResult.monthlyEMI).toLocaleString()}
+                  </div>
+                  <div className="opacity-70">
+                    for {emiResult.tenure} months
+                  </div>
                 </div>
               </div>
             )}
@@ -519,14 +324,8 @@ export default function ZelioWebsite() {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <div className="relative">
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent to-slate-950 pointer-events-none"></div>
-        <Contact />
-      </div>
-      
+      <Contact />
       <Footer />
-      </div>
     </div>
   );
 }

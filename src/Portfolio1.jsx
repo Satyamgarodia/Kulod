@@ -77,34 +77,34 @@ export default function ZelioWebsite() {
       <VehicleModels setCalculatorData={setCalculatorData} />
 
       {/* Features Section */}
-      <section id="features" className="py-32 px-8 md:px-16 lg:px-24 bg-[#f5f3ee]">
+      <section id="features" className="py-16 sm:py-20 md:py-24 lg:py-28 px-4 sm:px-6 md:px-12 lg:px-24 bg-[#f5f3ee] mt-12 sm:mt-16 md:mt-20">
         <div className="max-w-[1600px] mx-auto">
           
           {/* Header */}
-          <div className={`text-center mb-24 transition-all duration-700 ${isFeaturesVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
+          <div className={`text-center mb-12 sm:mb-16 md:mb-20 transition-all duration-700 ${isFeaturesVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
             <div 
-              className="text-sm tracking-widest uppercase mb-6 text-[#8ea989] font-semibold"
+              className="text-xs sm:text-sm tracking-widest uppercase mb-4 sm:mb-6 text-[#8ea989] font-semibold"
               style={{ letterSpacing: '0.15em' }}
             >
               Why Choose Zelio
             </div>
             <h2 
-              className="font-bold text-[#0a0e0d] mb-8"
+              className="font-bold text-[#0a0e0d] mb-6 sm:mb-8 px-4"
               style={{ 
                 fontFamily: 'Playfair Display, serif',
-                fontSize: 'clamp(2.5rem, 5vw, 5rem)',
+                fontSize: 'clamp(2rem, 5vw, 5rem)',
                 letterSpacing: '-0.02em'
               }}
             >
               Engineering Excellence
             </h2>
-            <p className="text-xl text-[#6b7570] max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-[#6b7570] max-w-3xl mx-auto leading-relaxed px-4">
               Every detail crafted for the perfect ride
             </p>
           </div>
 
           {/* Features Grid */}
-          <div className="grid md:grid-cols-3 gap-20">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 sm:gap-10 md:gap-12">
             {[
               {
                 icon: "⚡",
@@ -143,7 +143,7 @@ export default function ZelioWebsite() {
                 style={{ transitionDelay: `${idx * 100}ms` }}
               >
                 <div 
-                  className="w-24 h-24 hexagon bg-[#0a0e0d] text-[#f5f3ee] flex items-center justify-center text-5xl mx-auto mb-10"
+                  className="w-16 h-16 sm:w-20 sm:h-20 hexagon bg-[#0a0e0d] text-[#f5f3ee] flex items-center justify-center text-3xl sm:text-4xl mx-auto mb-6 sm:mb-8"
                   style={{
                     clipPath: 'polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%)'
                   }}
@@ -151,12 +151,12 @@ export default function ZelioWebsite() {
                   {feature.icon}
                 </div>
                 <h3 
-                  className="text-3xl font-bold text-[#0a0e0d] mb-6"
+                  className="text-xl sm:text-2xl font-bold text-[#0a0e0d] mb-3 sm:mb-4"
                   style={{ fontFamily: 'Playfair Display, serif' }}
                 >
                   {feature.title}
                 </h3>
-                <p className="text-[#6b7570] leading-[1.8] text-lg">
+                <p className="text-[#6b7570] leading-[1.7] sm:leading-[1.8] text-sm sm:text-base px-2">
                   {feature.description}
                 </p>
               </div>
@@ -168,7 +168,7 @@ export default function ZelioWebsite() {
       {/* EMI Calculator */}
       <section
         id="calculator"
-        className={`py-32 px-8 md:px-16 lg:px-24 relative overflow-hidden transition-all duration-700 ${
+        className={`py-16 sm:py-20 md:py-24 lg:py-28 px-4 sm:px-6 md:px-12 lg:px-24 relative overflow-hidden transition-all duration-700 mt-12 sm:mt-16 md:mt-20 ${
           isCalculatorVisible ? "opacity-100" : "opacity-0"
         }`}
       >
@@ -179,31 +179,31 @@ export default function ZelioWebsite() {
         <div className="max-w-[1000px] mx-auto relative z-10">
           
           {/* Header */}
-          <div className="text-center mb-16">
-            <div className="inline-block px-8 py-4 bg-[#0a0e0d] text-[#f5f3ee] text-xs uppercase tracking-widest font-semibold mb-8">
+          <div className="text-center mb-8 sm:mb-10 md:mb-12">
+            <div className="inline-block px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 bg-[#0a0e0d] text-[#f5f3ee] text-[0.65rem] sm:text-xs uppercase tracking-widest font-semibold mb-6 sm:mb-8">
               Finance
             </div>
             <h2 
-              className="font-bold text-[#0a0e0d] mb-8"
+              className="font-bold text-[#0a0e0d] mb-6 sm:mb-8 px-4"
               style={{ 
                 fontFamily: 'Playfair Display, serif',
-                fontSize: 'clamp(2.5rem, 5vw, 5rem)'
+                fontSize: 'clamp(2rem, 5vw, 5rem)'
               }}
             >
               EMI Calculator
             </h2>
-            <p className="text-xl text-[#0a0e0d]/70 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-[#0a0e0d]/70 max-w-3xl mx-auto leading-relaxed px-4">
               Plan your purchase with our easy EMI calculator
             </p>
           </div>
 
           {/* Calculator Form */}
-          <div className="bg-[#f5f3ee] p-16 rounded-lg">
-            <form onSubmit={calculateEMI} className="space-y-10">
+          <div className="bg-[#f5f3ee] p-6 sm:p-8 md:p-10 lg:p-12 rounded-lg">
+            <form onSubmit={calculateEMI} className="space-y-6 sm:space-y-8">
               
               {/* Vehicle Price */}
               <div>
-                <label className="block text-sm uppercase tracking-widest font-semibold text-[#0a0e0d] mb-3">
+                <label className="block text-xs sm:text-sm uppercase tracking-widest font-semibold text-[#0a0e0d] mb-2 sm:mb-3">
                   Vehicle Price (₹)
                 </label>
                 <input
@@ -218,13 +218,13 @@ export default function ZelioWebsite() {
                   placeholder="Enter vehicle price"
                   min="0"
                   required
-                  className="w-full px-5 py-5 border-2 border-[#0a0e0d] bg-transparent text-[#0a0e0d] text-lg placeholder-[#6b7570] focus:border-[#8ea989] focus:bg-[#8ea989]/5 transition-all"
+                  className="w-full px-4 sm:px-5 py-4 sm:py-5 border-2 border-[#0a0e0d] bg-transparent text-[#0a0e0d] text-base sm:text-lg placeholder-[#6b7570] focus:border-[#8ea989] focus:bg-[#8ea989]/5 transition-all"
                 />
               </div>
 
               {/* Down Payment */}
               <div>
-                <label className="block text-sm uppercase tracking-widest font-semibold text-[#0a0e0d] mb-3">
+                <label className="block text-xs sm:text-sm uppercase tracking-widest font-semibold text-[#0a0e0d] mb-2 sm:mb-3">
                   Down Payment (₹)
                 </label>
                 <input
@@ -239,14 +239,14 @@ export default function ZelioWebsite() {
                   placeholder="Enter down payment amount"
                   min="0"
                   required
-                  className="w-full px-5 py-5 border-2 border-[#0a0e0d] bg-transparent text-[#0a0e0d] text-lg placeholder-[#6b7570] focus:border-[#8ea989] focus:bg-[#8ea989]/5 transition-all"
+                  className="w-full px-4 sm:px-5 py-4 sm:py-5 border-2 border-[#0a0e0d] bg-transparent text-[#0a0e0d] text-base sm:text-lg placeholder-[#6b7570] focus:border-[#8ea989] focus:bg-[#8ea989]/5 transition-all"
                 />
               </div>
 
               {/* Tenure & Interest */}
-              <div className="grid md:grid-cols-2 gap-8">
+              <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
                 <div>
-                  <label className="block text-sm uppercase tracking-widest font-semibold text-[#0a0e0d] mb-3">
+                  <label className="block text-xs sm:text-sm uppercase tracking-widest font-semibold text-[#0a0e0d] mb-2 sm:mb-3">
                     Loan Tenure
                   </label>
                   <select
@@ -258,7 +258,7 @@ export default function ZelioWebsite() {
                       })
                     }
                     required
-                    className="w-full px-5 py-5 border-2 border-[#0a0e0d] bg-transparent text-[#0a0e0d] text-lg focus:border-[#8ea989] focus:bg-[#8ea989]/5 transition-all cursor-pointer"
+                    className="w-full px-4 sm:px-5 py-4 sm:py-5 border-2 border-[#0a0e0d] bg-transparent text-[#0a0e0d] text-base sm:text-lg focus:border-[#8ea989] focus:bg-[#8ea989]/5 transition-all cursor-pointer"
                   >
                     <option value="">Select tenure</option>
                     <option value="12">12 Months</option>
@@ -269,7 +269,7 @@ export default function ZelioWebsite() {
                 </div>
 
                 <div>
-                  <label className="block text-sm uppercase tracking-widest font-semibold text-[#0a0e0d] mb-3">
+                  <label className="block text-xs sm:text-sm uppercase tracking-widest font-semibold text-[#0a0e0d] mb-2 sm:mb-3">
                     Interest Rate (% p.a.)
                   </label>
                   <input
@@ -286,7 +286,7 @@ export default function ZelioWebsite() {
                     max="30"
                     step="0.1"
                     required
-                    className="w-full px-5 py-5 border-2 border-[#0a0e0d] bg-transparent text-[#0a0e0d] text-lg placeholder-[#6b7570] focus:border-[#8ea989] focus:bg-[#8ea989]/5 transition-all"
+                    className="w-full px-4 sm:px-5 py-4 sm:py-5 border-2 border-[#0a0e0d] bg-transparent text-[#0a0e0d] text-base sm:text-lg placeholder-[#6b7570] focus:border-[#8ea989] focus:bg-[#8ea989]/5 transition-all"
                   />
                 </div>
               </div>
@@ -294,7 +294,7 @@ export default function ZelioWebsite() {
               {/* Submit */}
               <button
                 type="submit"
-                className="w-full py-6 bg-[#0a0e0d] text-[#f5f3ee] text-lg font-semibold uppercase tracking-wide hover:bg-[#1a1f1e] transition-all"
+                className="w-full py-3.5 sm:py-4 bg-[#0a0e0d] text-[#f5f3ee] text-base sm:text-lg font-semibold uppercase tracking-wide hover:bg-[#1a1f1e] transition-all flex items-center justify-center"
               >
                 Calculate EMI
               </button>
@@ -302,13 +302,13 @@ export default function ZelioWebsite() {
 
             {/* Results */}
             {emiResult && (
-              <div className="mt-12 space-y-8 animate-fade-up">
+              <div className="mt-8 sm:mt-10 space-y-5 sm:space-y-6 animate-fade-up">
                 
                 {/* Divider */}
                 <div className="h-px bg-gradient-to-r from-transparent via-[#8ea989] to-transparent"></div>
 
                 {/* Details Grid */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
                   {[
                     { label: "Vehicle Price", value: `₹${emiResult.vehiclePrice.toLocaleString()}` },
                     { label: "Down Payment", value: `₹${emiResult.downPayment.toLocaleString()}` },
@@ -317,12 +317,12 @@ export default function ZelioWebsite() {
                   ].map((item, idx) => (
                     <div
                       key={idx}
-                      className="text-center p-6 bg-[#0a0e0d]/5"
+                      className="text-center p-4 sm:p-5 bg-[#0a0e0d]/5"
                     >
-                      <div className="text-xs uppercase tracking-widest text-[#6b7570] mb-3">
+                      <div className="text-[0.65rem] sm:text-xs uppercase tracking-widest text-[#6b7570] mb-1.5 sm:mb-2">
                         {item.label}
                       </div>
-                      <div className="font-display text-2xl font-bold text-[#0a0e0d]">
+                      <div className="font-display text-lg sm:text-xl font-bold text-[#0a0e0d]">
                         {item.value}
                       </div>
                     </div>
@@ -330,14 +330,14 @@ export default function ZelioWebsite() {
                 </div>
 
                 {/* Monthly EMI Highlight */}
-                <div className="bg-[#0a0e0d] text-[#f5f3ee] p-12 text-center">
-                  <div className="text-sm uppercase tracking-widest mb-4 opacity-70">
+                <div className="bg-[#0a0e0d] text-[#f5f3ee] p-8 sm:p-10 text-center">
+                  <div className="text-xs sm:text-sm uppercase tracking-widest mb-2 sm:mb-3 opacity-70">
                     Your Monthly Payment
                   </div>
-                  <div className="font-display text-6xl font-extrabold mb-2">
+                  <div className="font-display text-4xl sm:text-5xl font-extrabold mb-2">
                     ₹{Math.round(emiResult.monthlyEMI).toLocaleString()}
                   </div>
-                  <div className="opacity-70">
+                  <div className="opacity-70 text-sm sm:text-base">
                     for {emiResult.tenure} months
                   </div>
                 </div>

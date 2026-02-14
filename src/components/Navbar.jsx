@@ -25,21 +25,22 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-400 ${
         scrolled
-          ? "bg-[rgba(245,243,238,0.95)] backdrop-blur-xl py-6 shadow-sm"
-          : "bg-transparent py-8"
+          ? "bg-[rgba(245,243,238,0.95)] backdrop-blur-xl shadow-sm"
+          : "bg-transparent"
       }`}
       style={{
-        backdropFilter: scrolled ? 'blur(20px)' : 'none'
+        backdropFilter: scrolled ? 'blur(20px)' : 'none',
+        height: scrolled ? '72px' : '80px'
       }}
     >
-      <div className="max-w-[1400px] mx-auto px-16">
-        <div className="flex items-center justify-between">
+      <div className="max-w-[1400px] mx-auto px-6 sm:px-8 md:px-16 h-full">
+        <div className="flex items-center justify-between h-full">
           
           {/* Logo */}
           <a
             href="#home"
-            className="font-display text-3xl font-bold tracking-wide text-[#0a0e0d] cursor-pointer"
-            style={{ fontFamily: 'Playfair Display, serif', letterSpacing: '0.05em' }}
+            className="font-display text-3xl font-bold tracking-wide text-[#0a0e0d] cursor-pointer no-underline"
+            style={{ fontFamily: 'Playfair Display, serif', letterSpacing: '0.05em', color: '#0a0e0d' }}
             onClick={(e) => {
               e.preventDefault();
               document.querySelector("#home")?.scrollIntoView({
@@ -51,13 +52,13 @@ export default function Navbar() {
           </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-12">
+          <div className="hidden md:flex items-center gap-8">
             {navLinks.map((link, idx) => (
               <a
                 key={idx}
                 href={link.href}
-                className="text-[#0a0e0d] text-[0.95rem] font-medium tracking-wide relative group"
-                style={{ letterSpacing: '0.02em' }}
+                className="text-[#0a0e0d] text-[0.95rem] font-medium tracking-wide relative group no-underline"
+                style={{ letterSpacing: '0.02em', color: '#0a0e0d' }}
                 onClick={(e) => {
                   e.preventDefault();
                   document.querySelector(link.href)?.scrollIntoView({
@@ -72,7 +73,7 @@ export default function Navbar() {
             
             <button
               onClick={() => document.querySelector("#calculator")?.scrollIntoView({ behavior: "smooth" })}
-              className="px-8 py-3 bg-[#0a0e0d] text-[#f5f3ee] font-medium text-[0.95rem] tracking-wide hover:bg-[#8ea989] hover:text-[#0a0e0d] transition-all"
+              className="px-10 sm:px-12 md:px-14 py-3 bg-[#0a0e0d] text-[#f5f3ee] font-medium text-[0.95rem] tracking-wide hover:bg-[#8ea989] hover:text-[#0a0e0d] transition-all flex items-center justify-center whitespace-nowrap"
               style={{ letterSpacing: '0.02em' }}
             >
               Get Started
@@ -94,7 +95,7 @@ export default function Navbar() {
             mobileMenuOpen ? "max-h-96 mt-6" : "max-h-0"
           }`}
         >
-          <div className="bg-white/50 backdrop-blur-lg border border-[#0a0e0d]/10 p-4 space-y-2">
+          <div className="bg-white/50 backdrop-blur-lg border border-[#0a0e0d]/10 p-4 space-y-2 rounded-lg">
             {navLinks.map((link, idx) => (
               <a
                 key={idx}
@@ -106,7 +107,8 @@ export default function Navbar() {
                     behavior: "smooth",
                   });
                 }}
-                className="block px-4 py-3 text-[#0a0e0d] hover:bg-[#8ea989]/10 transition-all"
+                className="block px-4 py-3 text-[#0a0e0d] hover:bg-[#8ea989]/10 transition-all no-underline"
+                style={{ color: '#0a0e0d' }}
               >
                 {link.name}
               </a>
@@ -116,7 +118,7 @@ export default function Navbar() {
                 setMobileMenuOpen(false);
                 document.querySelector("#calculator")?.scrollIntoView({ behavior: "smooth" });
               }}
-              className="w-full px-4 py-3 bg-[#0a0e0d] text-[#f5f3ee] font-medium text-center"
+              className="w-full px-4 py-3 bg-[#0a0e0d] text-[#f5f3ee] font-medium text-center flex items-center justify-center"
             >
               Get Started
             </button>

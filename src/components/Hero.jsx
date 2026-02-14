@@ -22,36 +22,36 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="min-h-screen grid lg:grid-cols-2 gap-24 items-center px-8 md:px-16 lg:px-24 pt-40 pb-24 max-w-[1600px] mx-auto"
+      className="min-h-screen grid lg:grid-cols-2 gap-8 lg:gap-16 items-center px-4 sm:px-6 md:px-12 lg:px-24 pt-28 sm:pt-32 md:pt-36 lg:pt-40 pb-16 sm:pb-20 md:pb-24 max-w-[1600px] mx-auto"
     >
       {/* Hero Content */}
       <div className={`transition-all duration-1000 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}>
         <div 
-          className="inline-block px-8 py-4 bg-[#0a0e0d] text-[#f5f3ee] text-xs uppercase tracking-widest font-semibold mb-12"
+          className="inline-block px-4 sm:px-6 md:px-8 py-2 sm:py-2.5 md:py-3 bg-[#0a0e0d] text-[#f5f3ee] text-[0.65rem] sm:text-xs uppercase tracking-widest font-semibold mb-8 sm:mb-10 md:mb-12"
           style={{ letterSpacing: '0.15em' }}
         >
           Electric Mobility
         </div>
         
         <h1 
-          className="font-display font-extrabold leading-[1.1] tracking-tight mb-12"
+          className="font-display font-extrabold leading-[1.1] tracking-tight mb-6 sm:mb-8 md:mb-10"
           style={{ 
             fontFamily: 'Playfair Display, serif',
-            fontSize: 'clamp(3.5rem, 8vw, 7rem)',
+            fontSize: 'clamp(2.5rem, 8vw, 7rem)',
             letterSpacing: '-0.02em'
           }}
         >
           The Future<br />of Urban<br />Transport
         </h1>
 
-        <p className="text-xl md:text-2xl text-[#6b7570] max-w-[600px] mb-16 leading-[1.8]">
+        <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#6b7570] max-w-[600px] mb-8 sm:mb-10 md:mb-12 leading-[1.7] sm:leading-[1.8]">
           Experience the perfect harmony of sustainable engineering, elegant design, and uncompromising performance.
         </p>
 
-        <div className="flex flex-wrap gap-6">
+        <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
           <button
             onClick={scrollToModels}
-            className="px-14 py-6 bg-[#0a0e0d] text-[#f5f3ee] font-semibold text-lg tracking-wide hover:bg-[#8ea989] hover:text-[#0a0e0d] transition-all relative overflow-hidden"
+            className="px-10 sm:px-12 md:px-16 lg:px-20 py-3.5 sm:py-4 md:py-4 bg-[#0a0e0d] text-[#f5f3ee] font-semibold text-base sm:text-lg tracking-wide hover:bg-[#8ea989] hover:text-[#0a0e0d] transition-all relative overflow-hidden flex items-center justify-center w-full sm:w-auto"
             style={{ letterSpacing: '0.02em' }}
           >
             <span className="relative z-10">Explore Collection</span>
@@ -59,7 +59,7 @@ export default function Hero() {
 
           <button
             onClick={scrollToCalculator}
-            className="px-14 py-6 bg-transparent border-2 border-[#0a0e0d] text-[#0a0e0d] font-semibold text-lg tracking-wide hover:bg-[#0a0e0d] hover:text-[#f5f3ee] transition-all"
+            className="px-10 sm:px-12 md:px-16 lg:px-20 py-3.5 sm:py-4 md:py-4 bg-transparent border-2 border-[#0a0e0d] text-[#0a0e0d] font-semibold text-base sm:text-lg tracking-wide hover:bg-[#0a0e0d] hover:text-[#f5f3ee] transition-all flex items-center justify-center w-full sm:w-auto"
             style={{ letterSpacing: '0.02em' }}
           >
             Calculate EMI
@@ -68,7 +68,7 @@ export default function Hero() {
       </div>
 
       {/* Hero Visual */}
-      <div className={`relative transition-all duration-1000 delay-300 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}>
+      <div className={`relative transition-all duration-1000 delay-300 mt-8 lg:mt-0 ${isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-10"}`}>
         <div 
           className="relative aspect-[4/5] bg-gradient-to-br from-[#8ea989] to-[#c8e5c0] flex items-center justify-center overflow-hidden"
         >
@@ -82,7 +82,7 @@ export default function Hero() {
           
           {/* Scooter Icon */}
           <div 
-            className="text-[15rem]"
+            className="text-[8rem] sm:text-[10rem] md:text-[12rem] lg:text-[15rem]"
             style={{
               animation: 'float 6s ease-in-out infinite',
               filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.2))'
@@ -93,22 +93,22 @@ export default function Hero() {
         </div>
 
         {/* Stats Card */}
-        <div className="absolute bottom-[-3rem] right-[-3rem] bg-[#0a0e0d] text-[#f5f3ee] p-12 grid grid-cols-2 gap-10 min-w-[340px]">
+        <div className="absolute bottom-[-1.5rem] sm:bottom-[-2rem] md:bottom-[-2.5rem] right-[-0.5rem] sm:right-[-1rem] md:right-[-2.5rem] bg-[#0a0e0d] text-[#f5f3ee] p-4 sm:p-6 md:p-8 lg:p-10 grid grid-cols-2 gap-4 sm:gap-6 md:gap-8 min-w-[240px] sm:min-w-[280px] md:min-w-[320px]">
           {[
             { value: "180km", label: "Max Range" },
             { value: "75km/h", label: "Top Speed" },
             { value: "3-5hrs", label: "Charge Time" },
             { value: "4 Year", label: "Warranty" },
           ].map((stat, idx) => (
-            <div key={idx} className="text-center">
+            <div key={idx} className="text-center flex flex-col items-center justify-center">
               <div 
-                className="text-4xl font-bold mb-3"
+                className="text-xl sm:text-2xl md:text-3xl font-bold mb-1 sm:mb-2"
                 style={{ fontFamily: 'Playfair Display, serif' }}
               >
                 {stat.value}
               </div>
               <div 
-                className="text-xs uppercase tracking-widest opacity-70"
+                className="text-[0.6rem] sm:text-xs uppercase tracking-widest opacity-70"
                 style={{ letterSpacing: '0.1em' }}
               >
                 {stat.label}

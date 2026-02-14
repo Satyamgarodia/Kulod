@@ -5,7 +5,7 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import VehicleModels from "./components/VehicleCard";
 
-export default function ZelioWebsite() {
+export default function ZelioWebsite({ onNavigate }) {
   const [calculatorData, setCalculatorData] = useState({
     model: "",
     downPayment: "",
@@ -74,7 +74,7 @@ export default function ZelioWebsite() {
       
       <Navbar />
       <Hero />
-      <VehicleModels setCalculatorData={setCalculatorData} />
+      <VehicleModels setCalculatorData={setCalculatorData} onNavigate={onNavigate} />
 
       {/* Features Section */}
       <section id="features" className="py-16 sm:py-20 md:py-24 lg:py-28 px-4 sm:px-6 md:px-12 lg:px-24 bg-[#f5f3ee] mt-12 sm:mt-16 md:mt-20">

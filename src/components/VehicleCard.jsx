@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { vehicles } from "../vehicles";
 
-export default function VehicleModels({ setCalculatorData }) {
+export default function VehicleModels({ setCalculatorData, onNavigate }) {
   const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
@@ -22,9 +22,9 @@ export default function VehicleModels({ setCalculatorData }) {
     return () => {
       if (section) observer.unobserve(section);
     };
-  }, []);
+}, []);
 
-  const selectModel = (price) => {
+const selectModel = (price) => {
     setCalculatorData({
       model: price.toString(),
       downPayment: "",
@@ -37,6 +37,12 @@ export default function VehicleModels({ setCalculatorData }) {
         behavior: "smooth",
       });
     }, 100);
+  };
+
+  const navigateToDetails = (vehicleId) => {
+    if (onNavigate) {
+      onNavigate('vehicle-details', vehicleId);
+    }
   };
 
   const getStartingPrice = (vehicle) => {
@@ -94,12 +100,12 @@ export default function VehicleModels({ setCalculatorData }) {
                     backgroundImage: `url('data:image/svg+xml,<svg width="50" height="50" xmlns="http://www.w3.org/2000/svg"><rect width="50" height="50" fill="none" stroke="rgba(10,14,13,0.1)" stroke-width="1"/></svg>')`
                   }}
                 ></div>
-                <div 
-                  className="text-[6rem] sm:text-[8rem] md:text-[10rem] transition-transform duration-500 hover:scale-110 hover:rotate-[-5deg]"
+                <img 
+                  src="/bike.webp"
+                  alt={vehicle.name}
+                  className="w-3/4 h-3/4 object-contain transition-transform duration-500 hover:scale-110 hover:rotate-[-5deg]"
                   style={{ filter: 'drop-shadow(0 10px 30px rgba(0,0,0,0.3))' }}
-                >
-                  {vehicle.baseImage}
-                </div>
+                />
               </div>
 
               {/* Info */}
@@ -159,7 +165,13 @@ export default function VehicleModels({ setCalculatorData }) {
                       ₹{getStartingPrice(vehicle).toLocaleString()}
                     </div>
                   </div>
-                  <button className="px-12 sm:px-14 md:px-16 py-3 sm:py-3.5 bg-[#8ea989] text-[#0a0e0d] font-semibold hover:bg-[#c8e5c0] transition-all flex items-center justify-center w-full sm:w-auto whitespace-nowrap">
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent parent div onClick from firing
+                      navigateToDetails(vehicle.id); // Navigate to details page
+                    }}
+                    className="px-12 sm:px-14 md:px-16 py-3 sm:py-3.5 bg-[#8ea989] text-[#0a0e0d] font-semibold hover:bg-[#c8e5c0] transition-all flex items-center justify-center w-full sm:w-auto whitespace-nowrap"
+                  >
                     View Details
                   </button>
                 </div>
